@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admi.To - Trouve ta prochaine opportunité</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <!-- Header / Navigation -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <span class="logo-icon"><img src="/assets/images/logo.png" alt=""></span>
+                    <span class="logo-text">Admi.<span class="logo-highlight">To</span></span>
+                </a>
+
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#offres" class="nav-link active" id="offresNavLink">Offres</a></li>
+                    <li><a href="#" class="nav-link" id="walletNavLink">Mon portefeuille</a></li>
+                    <li><a href="#subscription" class="nav-link">Abonnement</a></li>
+                </ul>
+
+                <div class="nav-actions">
+                    <div class="auth-buttons" id="authButtons">
+                        <a href="#" class="btn btn-outline" id="loginBtn">Connexion</a>
+                        <a href="#" class="btn btn-primary" id="registerBtn">S'inscrire</a>
+                    </div>
+                    <div class="user-menu" id="userMenu" style="display: none;">
+                        <button class="user-avatar" id="userAvatar">
+                            <span id="userInitials">U</span>
+                        </button>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="dropdown-header">
+                                <span class="dropdown-name" id="userName">Utilisateur</span>
+                                <span class="dropdown-email" id="userEmail">email@exemple.com</span>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item" id="profileBtn">
+                                <i class="fas fa-user"></i> Mon profil
+                            </a>
+                            <a href="#" class="dropdown-item" id="subscriptionDropdownBtn">
+                                <i class="fas fa-crown"></i> Abonnement
+                            </a>
+                            <a href="#" class="dropdown-item" id="walletDropdownBtn">
+                                <i class="fas fa-wallet"></i> Portefeuille
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item dropdown-danger" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i> Déconnexion
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <span class="hero-badge">🌟 Découvre</span>
+                    <h1 class="hero-title">
+                        Trouve ta <br />
+                        <span class="hero-highlight">prochaine opportunité</span>
+                    </h1>
+                    <p class="hero-description">
+                        Bourses, admissions, emplois : explore des milliers d'offres
+                        sélectionnées pour toi. Débloque ton potentiel avec Admi.To.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#offres" class="btn btn-primary btn-lg" id="heroExploreBtn">
+                            Explorer les offres
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="#subscription" class="btn btn-outline btn-lg">
+                            <i class="fas fa-crown"></i> Premium
+                        </a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" id="totalOffers">0</span>
+                            <span class="stat-label">Offres disponibles</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="totalUsers">0</span>
+                            <span class="stat-label">Utilisateurs</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-number">3 €</span>
+                            <span class="stat-label">/ mois premium</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="hero-illustration">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600" alt="Étudiant" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catégories -->
+    <section class="categories" id="categories">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Catégories</span>
+                <h2 class="section-title">Explore par <span class="highlight">thématique</span></h2>
+                <p class="section-subtitle">Trouve l'opportunité qui correspond à ton profil</p>
+            </div>
+            <div class="categories-grid" id="categoriesGrid">
+                <div class="category-card" data-category="bourse">
+                    <div class="category-icon">🎓</div>
+                    <h3>Bourses</h3>
+                    <p>Financement pour tes études</p>
+                </div>
+                <div class="category-card" data-category="admission">
+                    <div class="category-icon">📚</div>
+                    <h3>Admissions</h3>
+                    <p>Formations et universités</p>
+                </div>
+                <div class="category-card" data-category="travail">
+                    <div class="category-icon">💼</div>
+                    <h3>Travail</h3>
+                    <p>Opportunités professionnelles</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offres - Section Premium (visible seulement après abonnement) -->
+    <section class="offers premium-section" id="offres">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag premium-tag">🔒 Premium</span>
+                <h2 class="section-title">Dernières <span class="highlight">opportunités</span></h2>
+                <p class="section-subtitle">Débloque toutes les offres avec un abonnement premium</p>
+            </div>
+
+            <!-- Message pour les non-abonnés -->
+            <div class="premium-lock" id="premiumLock">
+                <div class="premium-lock-content">
+                    <div class="premium-lock-icon">🔒</div>
+                    <h3>Contenu premium</h3>
+                    <p>Abonne-toi pour accéder à toutes les offres</p>
+                    <a href="#subscription" class="btn btn-primary btn-lg">
+                        <i class="fas fa-crown"></i> S'abonner maintenant
+                    </a>
+                    <p class="premium-lock-note">3 € / mois - Annulation à tout moment</p>
+                </div>
+            </div>
+
+            <!-- Offres (caché par défaut) -->
+            <div class="offers-content" id="offersContent" style="display: none;">
+                <div class="offers-filters">
+                    <div class="filter-group">
+                        <button class="filter-btn active" data-filter="all">Toutes</button>
+                        <button class="filter-btn" data-filter="bourse">🎓 Bourses</button>
+                        <button class="filter-btn" data-filter="admission">📚 Admissions</button>
+                        <button class="filter-btn" data-filter="travail">💼 Travail</button>
+                    </div>
+                    <div class="search-group">
+                        <input type="text" id="searchOffers" placeholder="Rechercher..." class="search-input" />
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                </div>
+
+                <div class="offers-grid" id="offersGrid">
+                    <div class="loading-spinner">
+                        <div class="spinner"></div>
+                        <p>Chargement des offres...</p>
+                    </div>
+                </div>
+
+                <div class="offers-actions" id="offersActions">
+                    <button class="btn btn-primary" id="loadMoreBtn">
+                        Voir plus d'offres
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Abonnement -->
+    <section class="subscription" id="subscription">
+        <div class="container">
+            <div class="subscription-wrapper">
+                <div class="subscription-content">
+                    <span class="section-tag">Premium</span>
+                    <h2 class="section-title">
+                        Débloque toutes les <span class="highlight">opportunités</span>
+                    </h2>
+                    <p class="section-subtitle">
+                        Accède à toutes les offres, reçois des alertes personnalisées
+                        et suis tes candidatures en temps réel.
+                    </p>
+                    <div class="subscription-features">
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Accès illimité à toutes les offres</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Alertes personnalisées</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Suivi avancé des candidatures</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Débloque les offres premium</span>
+                        </div>
+                    </div>
+                    <div class="subscription-pricing">
+                        <span class="price">3 €</span>
+                        <span class="period">/ mois</span>
+                    </div>
+                    <button class="btn btn-primary btn-lg" id="subscribeBtn">
+                        <i class="fas fa-crown"></i> S'abonner maintenant
+                    </button>
+                    <p class="subscription-note">
+                        🔒 Paiement sécurisé - Annulation à tout moment
+                    </p>
+                </div>
+                <div class="subscription-image">
+                    <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=500" alt="Premium" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <span class="logo-text">Admi.<span class="logo-highlight">To</span></span>
+                    <p>Trouve ta prochaine opportunité</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Navigation</h4>
+                    <a href="#offres">Offres</a>
+                    <a href="#" id="walletFooterLink">Portefeuille</a>
+                    <a href="#subscription">Abonnement</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Légal</h4>
+                    <a href="#">Conditions générales</a>
+                    <a href="#">Politique de confidentialité</a>
+                    <a href="#">Mentions légales</a>
+                </div>
+                <div class="footer-newsletter">
+                    <h4>Restez informé</h4>
+                    <p>Recevez les nouvelles offres</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" placeholder="Votre email" required />
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Admi.To. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals DESIGN AMÉLIORÉ -->
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content modal-auth">
+            <div class="modal-auth-header">
+                <div class="modal-auth-icon">🔐</div>
+                <h3>Connexion</h3>
+                <p>Connecte-toi pour accéder à ton compte</p>
+            </div>
+            <button class="modal-close" data-modal="loginModal">&times;</button>
+            <form id="loginForm" class="modal-auth-form">
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="loginEmail" placeholder="votre@email.com" required />
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Mot de passe</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required />
+                </div>
+                <button type="submit" class="btn btn-primary btn-full btn-auth">
+                    <i class="fas fa-sign-in-alt"></i> Se connecter
+                </button>
+                <p class="form-footer">
+                    Pas encore de compte ? <a href="#" id="switchToRegister">S'inscrire</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content modal-auth">
+            <div class="modal-auth-header">
+                <div class="modal-auth-icon">🎓</div>
+                <h3>Créer un compte</h3>
+                <p>Rejoins Admi.To et trouve ta prochaine opportunité</p>
+            </div>
+            <button class="modal-close" data-modal="registerModal">&times;</button>
+            <form id="registerForm" class="modal-auth-form">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Nom complet</label>
+                    <input type="text" id="registerName" placeholder="Votre nom" required />
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="registerEmail" placeholder="votre@email.com" required />
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Mot de passe</label>
+                    <input type="password" id="registerPassword" placeholder="Min 6 caractères" required />
+                </div>
+                <button type="submit" class="btn btn-primary btn-full btn-auth">
+                    <i class="fas fa-user-plus"></i> S'inscrire
+                </button>
+                <p class="form-footer">
+                    Déjà un compte ? <a href="#" id="switchToLogin">Se connecter</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Offer Detail Modal -->
+    <div class="modal modal-lg" id="offerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="offerModalTitle">Offre</h3>
+                <button class="modal-close" data-modal="offerModal">&times;</button>
+            </div>
+            <div id="offerModalBody">
+                <div class="offer-detail-loading">Chargement...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wallet Modal -->
+    <div class="modal modal-lg" id="walletModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Mon portefeuille</h3>
+                <button class="modal-close" data-modal="walletModal">&times;</button>
+            </div>
+            <div id="walletModalBody">
+                <div class="wallet-content">
+                    <p class="wallet-empty">Aucune offre dans votre portefeuille</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon"></span>
+        <span class="toast-message"></span>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/api.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
