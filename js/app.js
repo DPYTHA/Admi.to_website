@@ -353,19 +353,28 @@ if (walletFooterLink) {
 // ============================================================
 // Hero Stats
 // ============================================================
+// js/app.js - Remplacer loadStats()
+
 async function loadStats() {
     if (state.isStopped) return;
 
     try {
         const stats = await StatsAPI.getStats();
+        console.log('📊 Statistiques reçues:', stats);
+
         if (elements.totalOffers) {
-            elements.totalOffers.textContent = stats.total_offers || 0;
+
+            const offersCount = stats.total_offers || stats.offers || 0;
+            elements.totalOffers.textContent = offersCount > 0 ? offersCount : '0';
         }
         if (elements.totalUsers) {
-            elements.totalUsers.textContent = stats.total_users || 0;
+            const usersCount = stats.total_users || stats.users || 0;
+            elements.totalUsers.textContent = usersCount > 0 ? usersCount : '0';
         }
     } catch (error) {
-        console.error('Error loading stats:', error);
+        console.error('❌ Error loading stats:', error);
+        // ✅ Garder les valeurs existantes en cas d'erreur
+
     }
 }
 
