@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nos Services - Admi.To</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        /* ============================================================
+           CSS Variables & Reset
+           ============================================================ */
+        :root {
+            --brown-dark: #5C3A21;
+            --brown: #7B4B2A;
+            --brown-light: #EADFD1;
+            --cream: #F3E9DE;
+            --white: #FFFFFF;
+            --text: #3B2A1A;
+            --text-light: #8A7A65;
+            --shadow: 0 4px 24px rgba(92, 58, 33, 0.12);
+            --shadow-hover: 0 8px 40px rgba(92, 58, 33, 0.20);
+            --radius: 16px;
+            --radius-sm: 8px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            background: var(--white);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ============================================================
+           HEADER
+           ============================================================ */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid rgba(92, 58, 33, 0.08);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-icon {
+            font-size: 28px;
+        }
+
+        .logo-icon img {
+            font-size: 28px;
+            width: 75px;
+        }
+
+        .logo-highlight {
+            color: var(--brown-dark);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--brown-dark);
+        }
+
+        .nav-links a.active {
+            color: var(--brown-dark);
+            font-weight: 600;
+        }
+
+        .btn-nav {
+            padding: 10px 24px;
+            background: var(--brown-dark);
+            color: var(--white);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-nav:hover {
+            background: var(--brown);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        /* ============================================================
+           HERO
+           ============================================================ */
+        .hero {
+            padding: 80px 0 60px;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--white) 100%);
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 4px 16px;
+            background: var(--brown-dark);
+            color: var(--white);
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--text);
+            margin-bottom: 16px;
+        }
+
+        .hero h1 .highlight {
+            color: var(--brown-dark);
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-light);
+            max-width: 640px;
+            margin: 0 auto 32px;
+        }
+
+        /* ============================================================
+           SERVICES GRID
+           ============================================================ */
+        .services {
+            padding: 80px 0;
+            background: var(--white);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 32px;
+            border: 1px solid rgba(92, 58, 33, 0.06);
+            transition: var(--transition);
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--brown-light);
+        }
+
+        .service-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 16px;
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-icon {
+            background: var(--brown-dark);
+            color: var(--white);
+        }
+
+        .service-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .service-card p {
+            color: var(--text-light);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .service-card .feature-list {
+            text-align: left;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(92, 58, 33, 0.06);
+        }
+
+        .service-card .feature-list li {
+            list-style: none;
+            padding: 6px 0;
+            font-size: 14px;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .service-card .feature-list li i {
+            color: var(--brown-dark);
+            font-size: 14px;
+        }
+
+        /* ============================================================
+           CTA SECTION
+           ============================================================ */
+        .cta {
+            padding: 80px 0;
+            background: var(--brown-dark);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .cta p {
+            font-size: 18px;
+            opacity: 0.85;
+            max-width: 560px;
+            margin: 0 auto 32px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 40px;
+            background: #25D366;
+            color: white;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-whatsapp:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-whatsapp i {
+            font-size: 24px;
+        }
+
+        .btn-telegram {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 40px;
+            background: #0088cc;
+            color: white;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-telegram:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 32px rgba(0, 136, 204, 0.4);
+        }
+
+        .btn-telegram i {
+            font-size: 24px;
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        .footer {
+            background: var(--text);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer .logo-text {
+            color: var(--white);
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .footer .logo-highlight {
+            color: #EADFD1;
+        }
+
+        .footer p {
+            margin-top: 8px;
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 24px;
+                gap: 16px;
+                border-bottom: 1px solid rgba(92, 58, 33, 0.08);
+                box-shadow: var(--shadow);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta h2 {
+                font-size: 28px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-whatsapp,
+            .btn-telegram {
+                width: 100%;
+                justify-content: center;
+                padding: 14px 24px;
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .hero {
+                padding: 60px 0 40px;
+            }
+
+            .hero h1 {
+                font-size: 26px;
+            }
+
+            .service-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon"><img src="/assets/images/logo.png" alt=""></span>
+                    <span class="logo-text">Admi.<span class="logo-highlight">To</span></span>
+                </a>
+
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="services.html" class="active">Nos services</a></li>
+                    <li><a href="#contact" class="btn-nav">Nous contacter</a></li>
+                </ul>
+
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="container">
+            <span class="hero-badge">🌟 Découvre</span>
+            <h1>
+                Nos <span class="highlight">services</span>
+            </h1>
+            <p>
+                Un accompagnement personnalisé pour te guider vers la meilleure
+                opportunité, où que tu sois dans le monde.
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== SERVICES ===== -->
+    <section class="services">
+        <div class="container">
+            <div class="services-grid">
+
+                <!-- Service 1 : Suivi de candidatures -->
+                <div class="service-card">
+                    <div class="service-icon">📋</div>
+                    <h3>Suivi de candidatures</h3>
+                    <p>
+                        Centralise et suis toutes tes candidatures en un seul endroit.
+                        Ne manque plus aucune date limite.
+                    </p>
+                    <div class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> Tableau de bord personnalisé</li>
+                        <li><i class="fas fa-check-circle"></i> Alertes et rappels</li>
+                        <li><i class="fas fa-check-circle"></i> Statuts en temps réel</li>
+                        <li><i class="fas fa-check-circle"></i> Historique complet</li>
+                    </div>
+                </div>
+
+                <!-- Service 2 : Accompagnement mondial -->
+                <div class="service-card">
+                    <div class="service-icon">🌍</div>
+                    <h3>Accompagnement mondial</h3>
+                    <p>
+                        Nous t'accompagnons partout dans le monde pour tes démarches
+                        d'admission, de bourse ou d'emploi.
+                    </p>
+                    <div class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> Europe, Afrique, Amérique</li>
+                        <li><i class="fas fa-check-circle"></i> Conseils personnalisés</li>
+                        <li><i class="fas fa-check-circle"></i> Aide à la rédaction</li>
+                        <li><i class="fas fa-check-circle"></i> Mise en relation</li>
+                    </div>
+                </div>
+
+                <!-- Service 3 : Offres exclusives -->
+                <div class="service-card">
+                    <div class="service-icon">🎯</div>
+                    <h3>Offres exclusives</h3>
+                    <p>
+                        Accède à des offres sélectionnées spécialement pour toi,
+                        en fonction de ton profil et de tes ambitions.
+                    </p>
+                    <div class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> Bourses d'études</li>
+                        <li><i class="fas fa-check-circle"></i> Admissions universités</li>
+                        <li><i class="fas fa-check-circle"></i> Offres d'emploi</li>
+                        <li><i class="fas fa-check-circle"></i> Programmes d'échange</li>
+                    </div>
+                </div>
+
+                <!-- Service 4 : Assistance personnalisée -->
+                <div class="service-card">
+                    <div class="service-icon">👤</div>
+                    <h3>Assistance personnalisée</h3>
+                    <p>
+                        Un conseiller dédié pour t'accompagner à chaque étape de
+                        ton parcours.
+                    </p>
+                    <div class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> Conseil en orientation</li>
+                        <li><i class="fas fa-check-circle"></i> Relecture de dossiers</li>
+                        <li><i class="fas fa-check-circle"></i> Préparation aux entretiens</li>
+                        <li><i class="fas fa-check-circle"></i> Suivi régulier</li>
+                    </div>
+                </div>
+
+                <!-- Service 5 : Plateforme collaborative -->
+                <div class="service-card">
+                    <div class="service-icon">🤝</div>
+                    <h3>Plateforme collaborative</h3>
+                    <p>
+                        Rejoins une communauté d'étudiants et de professionnels
+                        pour échanger et progresser ensemble.
+                    </p>
+                    <div class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> Forums d'échange</li>
+                        <li><i class="fas fa-check-circle"></i> Groupes de discussion</li>
+                        <li><i class="fas fa-check-circle"></i> Partages d'expériences</li>
+                        <li><i class="fas fa-check-circle"></i> Mentorat</li>
+                    </div>
+                </div>
+
+                <!-- Service 6 : Dashboard intelligent -->
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>Dashboard intelligent</h3>
+                    <p>
+                        Visualise tes progrès et ta performance grâce à des
+                        statistiques détaillées.
+                    </p>
+                    <div class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> Statistiques en temps réel</li>
+                        <li><i class="fas fa-check-circle"></i> Analyse de progression</li>
+                        <li><i class="fas fa-check-circle"></i> Recommandations</li>
+                        <li><i class="fas fa-check-circle"></i> Objectifs personnalisés</li>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="cta" id="contact">
+        <div class="container">
+            <h2>Prêt à réussir ?</h2>
+            <p>
+                Contacte-nous dès maintenant et bénéficie d'un accompagnement
+                personnalisé pour ta réussite.
+            </p>
+            <div class="cta-buttons">
+                <!-- WhatsApp -->
+                <a href="https://wa.me/79879040719?text=Bonjour%20Admi.To%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20vos%20services."
+                    target="_blank" class="btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    WhatsApp
+                </a>
+
+                <!-- Telegram -->
+                <a href="https://t.me/+79879040719" target="_blank" class="btn-telegram">
+                    <i class="fab fa-telegram-plane"></i>
+                    Telegram
+                </a>
+            </div>
+            <p style="margin-top: 24px; opacity: 0.6; font-size: 14px;">
+                📞 +7 987 904 0719
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <span class="logo-text">Admi.<span class="logo-highlight">To</span></span>
+            <p>&copy; 2026 Admi.To — Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function () {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Smooth scroll for contact link
+        document.querySelector('a[href="#contact"]').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        console.log('📱 Admi.To - Services page loaded');
+        console.log('📞 Contact: +7 987 904 0719');
+        console.log('💬 WhatsApp: https://wa.me/79879040719');
+        console.log('💬 Telegram: https://t.me/+79879040719');
+    </script>
+
+</body>
+
+</html>
