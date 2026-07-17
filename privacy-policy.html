@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Politique de confidentialité - Admi.To</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        /* ============================================================
+           CSS Variables & Reset
+           ============================================================ */
+        :root {
+            --brown-dark: #5C3A21;
+            --brown: #7B4B2A;
+            --brown-light: #EADFD1;
+            --cream: #F3E9DE;
+            --white: #FFFFFF;
+            --text: #3B2A1A;
+            --text-light: #8A7A65;
+            --shadow: 0 4px 24px rgba(92, 58, 33, 0.12);
+            --shadow-hover: 0 8px 40px rgba(92, 58, 33, 0.20);
+            --radius: 16px;
+            --radius-sm: 8px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            background: var(--cream);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ============================================================
+           HEADER
+           ============================================================ */
+        .header {
+            background: var(--white);
+            border-bottom: 1px solid rgba(92, 58, 33, 0.08);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-icon {
+            font-size: 28px;
+        }
+
+        .logo-highlight {
+            color: var(--brown-dark);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: var(--brown-dark);
+        }
+
+        .btn-nav {
+            padding: 8px 20px;
+            background: var(--brown-dark);
+            color: var(--white);
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .btn-nav:hover {
+            background: var(--brown);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        /* ============================================================
+           HERO
+           ============================================================ */
+        .hero {
+            padding: 60px 0 40px;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--white) 100%);
+            text-align: center;
+            border-bottom: 1px solid rgba(92, 58, 33, 0.06);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 4px 16px;
+            background: var(--brown-dark);
+            color: var(--white);
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .hero h1 .highlight {
+            color: var(--brown-dark);
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ============================================================
+           CONTENT
+           ============================================================ */
+        .content {
+            padding: 48px 0 80px;
+        }
+
+        .policy-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 48px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(92, 58, 33, 0.06);
+        }
+
+        .policy-card .last-updated {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(92, 58, 33, 0.06);
+        }
+
+        .policy-card .last-updated strong {
+            color: var(--text);
+        }
+
+        .policy-card h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text);
+            margin: 32px 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .policy-card h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .policy-card h2 .icon {
+            font-size: 24px;
+        }
+
+        .policy-card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text);
+            margin: 20px 0 8px;
+        }
+
+        .policy-card p {
+            color: var(--text-light);
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .policy-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 8px 0 16px;
+        }
+
+        .policy-card ul li {
+            padding: 6px 0 6px 28px;
+            position: relative;
+            color: var(--text-light);
+            font-size: 15px;
+        }
+
+        .policy-card ul li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--brown-dark);
+            font-weight: 700;
+        }
+
+        .policy-card .highlight-box {
+            background: var(--cream);
+            padding: 20px 24px;
+            border-radius: var(--radius-sm);
+            margin: 16px 0;
+            border-left: 4px solid var(--brown-dark);
+        }
+
+        .policy-card .highlight-box p {
+            margin-bottom: 0;
+            font-size: 14px;
+        }
+
+        .policy-card .highlight-box strong {
+            color: var(--text);
+        }
+
+        /* ============================================================
+           TABLE
+           ============================================================ */
+        .policy-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 20px;
+            font-size: 14px;
+        }
+
+        .policy-table th {
+            background: var(--cream);
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text);
+            border-bottom: 2px solid rgba(92, 58, 33, 0.08);
+        }
+
+        .policy-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(92, 58, 33, 0.06);
+            color: var(--text-light);
+        }
+
+        .policy-table tr:hover td {
+            background: rgba(243, 233, 222, 0.3);
+        }
+
+        /* ============================================================
+           CONTACT
+           ============================================================ */
+        .contact-box {
+            background: var(--cream);
+            border-radius: var(--radius-sm);
+            padding: 24px 28px;
+            margin-top: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .contact-box .icon {
+            font-size: 28px;
+        }
+
+        .contact-box .info {
+            flex: 1;
+        }
+
+        .contact-box .info h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .contact-box .info p {
+            margin: 0;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .contact-box .info a {
+            color: var(--brown-dark);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .contact-box .info a:hover {
+            text-decoration: underline;
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        .footer {
+            background: var(--text);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer .logo-text {
+            color: var(--white);
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .footer .logo-highlight {
+            color: #EADFD1;
+        }
+
+        .footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin: 12px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .footer .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer p {
+            margin-top: 8px;
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                flex-direction: column;
+                padding: 24px;
+                gap: 16px;
+                border-bottom: 1px solid rgba(92, 58, 33, 0.08);
+                box-shadow: var(--shadow);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .policy-card {
+                padding: 24px 20px;
+            }
+
+            .policy-card h2 {
+                font-size: 19px;
+            }
+
+            .policy-table {
+                font-size: 13px;
+            }
+
+            .policy-table th,
+            .policy-table td {
+                padding: 8px 10px;
+            }
+
+            .contact-box {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .hero h1 {
+                font-size: 24px;
+            }
+
+            .policy-card {
+                padding: 16px;
+            }
+
+            .policy-card ul li {
+                padding-left: 20px;
+                font-size: 14px;
+            }
+
+            .policy-table {
+                font-size: 12px;
+            }
+
+            .policy-table th,
+            .policy-table td {
+                padding: 6px 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="navbar">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">🎓</span>
+                <span class="logo-text">Admi.<span class="logo-highlight">To</span></span>
+            </a>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="services.html">Nos services</a></li>
+                <li><a href="subscription.html">Abonnement</a></li>
+                <li><a href="privacy-policy.html" class="active"
+                        style="color: var(--brown-dark); font-weight: 600;">Politique</a></li>
+            </ul>
+
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="container">
+            <span class="hero-badge">🔒 Confidentialité</span>
+            <h1>Politique de <span class="highlight">confidentialité</span></h1>
+            <p>Admi.To s'engage à protéger vos données personnelles.</p>
+        </div>
+    </section>
+
+    <!-- ===== CONTENT ===== -->
+    <section class="content">
+        <div class="container">
+            <div class="policy-card">
+
+                <!-- Last Updated -->
+                <div class="last-updated">
+                    <strong>📅 Dernière mise à jour :</strong> 17 juillet 2026
+                </div>
+
+                <!-- Introduction -->
+                <h2><span class="icon">📖</span> Introduction</h2>
+                <p>
+                    Bienvenue sur Admi.To. La présente politique de confidentialité explique comment
+                    nous collectons, utilisons, partageons et protégeons vos données personnelles
+                    lorsque vous utilisez notre application et notre site web.
+                </p>
+                <p>
+                    En utilisant Admi.To, vous acceptez les pratiques décrites dans cette politique.
+                    Nous nous engageons à respecter les réglementations en vigueur, notamment le RGPD
+                    (Règlement Général sur la Protection des Données) et la loi française Informatique
+                    et Libertés.
+                </p>
+
+                <!-- Données collectées -->
+                <h2><span class="icon">📊</span> Données collectées</h2>
+                <p>Nous collectons les données suivantes lorsque vous utilisez notre application :</p>
+
+                <table class="policy-table">
+                    <thead>
+                        <tr>
+                            <th>Type de données</th>
+                            <th>Exemples</th>
+                            <th>Finalité</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Informations d'identification</strong></td>
+                            <td>Nom, prénom, email</td>
+                            <td>Création et gestion du compte</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Données de profil</strong></td>
+                            <td>Pays, type de profil, préférences</td>
+                            <td>Personnalisation de l'expérience</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Données de paiement</strong></td>
+                            <td>Historique des transactions, abonnements</td>
+                            <td>Gestion des paiements (via Genius Pay / PayPal)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Données d'utilisation</strong></td>
+                            <td>Offres consultées, candidatures sauvegardées</td>
+                            <td>Amélioration du service</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Données techniques</strong></td>
+                            <td>Adresse IP, type d'appareil, version OS</td>
+                            <td>Sécurité et optimisation</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Utilisation des données -->
+                <h2><span class="icon">⚙️</span> Utilisation des données</h2>
+                <p>Nous utilisons vos données pour :</p>
+                <ul>
+                    <li><strong>Créer et gérer votre compte</strong> : Inscription, connexion, mise à jour du profil.
+                    </li>
+                    <li><strong>Personnaliser votre expérience</strong> : Recommandations d'offres adaptées à votre
+                        profil.</li>
+                    <li><strong>Traiter vos paiements</strong> : Gestion des abonnements premium via Genius Pay et
+                        PayPal.</li>
+                    <li><strong>Vous informer</strong> : Alertes sur les nouvelles offres, rappels de dates limites.
+                    </li>
+                    <li><strong>Améliorer le service</strong> : Analyse des comportements pour optimiser l'application.
+                    </li>
+                    <li><strong>Assurer la sécurité</strong> : Protection contre les fraudes et abus.</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>🔒 Paiements sécurisés :</strong> Les transactions sont traitées par
+                        <strong>Genius Pay</strong> et <strong>PayPal</strong>. Nous ne stockons jamais
+                        vos coordonnées bancaires sur nos serveurs.
+                    </p>
+                </div>
+
+                <!-- Partage des données -->
+                <h2><span class="icon">🤝</span> Partage des données</h2>
+                <p>Nous ne vendons ni ne louons vos données personnelles à des tiers. Nous pouvons partager vos données
+                    :</p>
+                <ul>
+                    <li><strong>Avec nos prestataires techniques</strong> : Hébergement, paiements, notifications
+                        (Genius Pay, PayPal, Railway).</li>
+                    <li><strong>Pour respecter la loi</strong> : Si nous y sommes contraints par une autorité
+                        judiciaire.</li>
+                    <li><strong>Avec votre consentement</strong> : Si vous nous autorisez à partager des données
+                        spécifiques.</li>
+                </ul>
+
+                <!-- Sécurité -->
+                <h2><span class="icon">🛡️</span> Sécurité des données</h2>
+                <p>
+                    Nous mettons en œuvre des mesures de sécurité techniques et organisationnelles pour
+                    protéger vos données contre tout accès non autorisé, perte ou divulgation :
+                </p>
+                <ul>
+                    <li><strong>Chiffrement</strong> : Toutes les données sont chiffrées en transit (HTTPS/TLS).</li>
+                    <li><strong>Authentification</strong> : Les mots de passe sont hashés avec bcrypt.</li>
+                    <li><strong>Contrôle d'accès</strong> : Seuls les administrateurs autorisés ont accès aux données.
+                    </li>
+                    <li><strong>Audits réguliers</strong> : Nous surveillons les accès et les activités suspectes.</li>
+                </ul>
+
+                <!-- Cookies -->
+                <h2><span class="icon">🍪</span> Cookies et technologies similaires</h2>
+                <p>
+                    Admi.To utilise des cookies pour améliorer votre expérience :
+                </p>
+                <ul>
+                    <li><strong>Cookies de session</strong> : Pour maintenir votre connexion active.</li>
+                    <li><strong>Cookies de préférences</strong> : Pour mémoriser vos paramètres (langue, filtres).</li>
+                    <li><strong>Cookies analytiques</strong> : Pour comprendre comment vous utilisez l'application.</li>
+                </ul>
+                <p>Vous pouvez gérer vos préférences de cookies via les paramètres de votre navigateur.</p>
+
+                <!-- Droits des utilisateurs -->
+                <h2><span class="icon">👤</span> Vos droits</h2>
+                <p>Conformément au RGPD, vous disposez des droits suivants sur vos données personnelles :</p>
+                <ul>
+                    <li><strong>Droit d'accès</strong> : Obtenir une copie des données que nous détenons sur vous.</li>
+                    <li><strong>Droit de rectification</strong> : Modifier vos données si elles sont inexactes.</li>
+                    <li><strong>Droit à l'effacement</strong> : Demander la suppression de vos données ("droit à
+                        l'oubli").</li>
+                    <li><strong>Droit d'opposition</strong> : Refuser l'utilisation de vos données pour certains
+                        traitements.</li>
+                    <li><strong>Droit à la portabilité</strong> : Recevoir vos données dans un format structuré.</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <p>
+                        <strong>✉️ Pour exercer vos droits :</strong> Contactez-nous à
+                        <strong>pythamoua@gmail.com</strong>. Nous répondrons à votre demande
+                        dans un délai maximal de 30 jours.
+                    </p>
+                </div>
+
+                <!-- Conservation -->
+                <h2><span class="icon">⏳</span> Conservation des données</h2>
+                <p>
+                    Nous conservons vos données personnelles aussi longtemps que votre compte est actif.
+                    Après suppression de votre compte, les données sont conservées pendant une période
+                    de <strong>12 mois</strong> à des fins juridiques et de sécurité, puis supprimées
+                    définitivement.
+                </p>
+
+                <!-- Enfants -->
+                <h2><span class="icon">🧒</span> Protection des mineurs</h2>
+                <p>
+                    Admi.To s'adresse à un public de 16 ans et plus. Nous ne collectons pas délibérément
+                    des données personnelles d'enfants de moins de 16 ans. Si vous êtes parent et
+                    que vous pensez que votre enfant nous a fourni des données, veuillez nous contacter.
+                </p>
+
+                <!-- Contact -->
+                <h2><span class="icon">📞</span> Contact</h2>
+                <p>Pour toute question concernant cette politique de confidentialité, vous pouvez nous contacter :</p>
+
+                <div class="contact-box">
+                    <span class="icon">✉️</span>
+                    <div class="info">
+                        <h3>Admi.To - Service des données personnelles</h3>
+                        <p>
+                            Email : <a href="pythamoua@gmail.com">pythamoua@gmail.com</a>
+                        </p>
+                        <p>
+                            Téléphone : <a href="tel:+79879040719">+7 987 904 0719</a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- DPO -->
+                <div
+                    style="margin-top: 20px; padding: 16px 20px; background: #f5f0eb; border-radius: var(--radius-sm); border-left: 4px solid var(--brown-dark);">
+                    <p style="margin: 0; font-size: 14px; color: var(--text-light);">
+                        <strong>🔐 Délégué à la Protection des Données (DPO) :</strong>
+                        Nous avons désigné un DPO pour superviser la conformité de nos traitements.
+                        Vous pouvez le contacter à <a href="mailto:pythamoua@gmail.com"
+                            style="color: var(--brown-dark); font-weight: 500;">pythamoua@gmail.com</a>
+                    </p>
+                </div>
+
+                <!-- Modifications -->
+                <h2><span class="icon">📝</span> Modifications</h2>
+                <p>
+                    Nous nous réservons le droit de modifier cette politique de confidentialité à tout moment.
+                    Les modifications seront publiées sur cette page et, si elles sont substantielles,
+                    nous vous en informerons par email ou via l'application.
+                </p>
+                <p>
+                    Nous vous encourageons à consulter régulièrement cette page pour rester informé de
+                    la manière dont nous protégeons vos données.
+                </p>
+
+                <!-- Acceptation -->
+                <div
+                    style="margin-top: 32px; padding: 20px; background: var(--cream); border-radius: var(--radius-sm); text-align: center;">
+                    <p style="margin: 0; font-size: 14px; color: var(--text-light);">
+                        <strong>✅ En utilisant Admi.To, vous acceptez les termes de cette politique.</strong>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <span class="logo-text">Admi.<span class="logo-highlight">To</span></span>
+            <div class="footer-links">
+                <a href="index.html">Accueil</a>
+                <a href="services.html">Nos services</a>
+                <a href="subscription.html">Abonnement</a>
+                <a href="privacy-policy.html">Politique de confidentialité</a>
+            </div>
+            <p>&copy; 2026 Admi.To — Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function () {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        console.log('🔒 Admi.To - Politique de confidentialité');
+        console.log('📅 Dernière mise à jour : 17 juillet 2026');
+        console.log('✉️ Contact : pythamoua@gmail.com');
+    </script>
+
+</body>
+
+</html>
