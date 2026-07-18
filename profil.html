@@ -726,7 +726,39 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Pays</label>
-                                        <input type="text" id="country" placeholder="Votre pays" />
+                                        <select id="countrySelect" class="form-control">
+                                            <option value="FR">🇫🇷 France</option>
+                                            <option value="CI">🇨🇮 Côte d'Ivoire</option>
+                                            <option value="SN">🇸🇳 Sénégal</option>
+                                            <option value="CM">🇨🇲 Cameroun</option>
+                                            <option value="BJ">🇧🇯 Bénin</option>
+                                            <option value="TG">🇹🇬 Togo</option>
+                                            <option value="ML">🇲🇱 Mali</option>
+                                            <option value="BF">🇧🇫 Burkina Faso</option>
+                                            <option value="NE">🇳🇪 Niger</option>
+                                            <option value="NG">🇳🇬 Nigeria</option>
+                                            <option value="GH">🇬🇭 Ghana</option>
+                                            <option value="MA">🇲🇦 Maroc</option>
+                                            <option value="TN">🇹🇳 Tunisie</option>
+                                            <option value="DZ">🇩🇿 Algérie</option>
+                                            <option value="CA">🇨🇦 Canada</option>
+                                            <option value="US">🇺🇸 États-Unis</option>
+                                            <option value="BE">🇧🇪 Belgique</option>
+                                            <option value="CH">🇨🇭 Suisse</option>
+                                            <option value="GB">🇬🇧 Royaume-Uni</option>
+                                            <option value="DE">🇩🇪 Allemagne</option>
+                                            <option value="ES">🇪🇸 Espagne</option>
+                                            <option value="IT">🇮🇹 Italie</option>
+                                            <option value="PT">🇵🇹 Portugal</option>
+                                            <option value="NL">🇳🇱 Pays-Bas</option>
+                                            <option value="ZA">🇿🇦 Afrique du Sud</option>
+                                            <option value="KE">🇰🇪 Kenya</option>
+                                            <option value="TZ">🇹🇿 Tanzanie</option>
+                                            <option value="UG">🇺🇬 Ouganda</option>
+                                            <option value="RW">🇷🇼 Rwanda</option>
+                                            <option value="ET">🇪🇹 Éthiopie</option>
+                                            <option value="SD">🇸🇩 Soudan</option>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -884,7 +916,7 @@
         const fullName = document.getElementById('fullName');
         const email = document.getElementById('email');
         const profileType = document.getElementById('profileType');
-        const country = document.getElementById('country');
+        const countrySelect = document.getElementById('countrySelect');
 
         // ============================================================
         // Token Management
@@ -940,6 +972,7 @@
                 if (response.status === 401) {
                     localStorage.removeItem('admito_token');
                     showLoginRequired();
+                    showToast('Session expirée, veuillez vous reconnecter', 'error');
                     return;
                 }
 
@@ -948,7 +981,7 @@
                 }
 
                 const user = await response.json();
-                console.log('👤 Utilisateur:', user);
+                console.log('👤 Utilisateur reçu:', user);
                 updateProfileUI(user);
 
             } catch (error) {
@@ -959,7 +992,7 @@
                     full_name: 'Jean Dupont',
                     email: 'jean@exemple.com',
                     profile_type: 'etudiant',
-                    country: 'France',
+                    country: 'FR',
                     account_status: 'active',
                     is_premium: true
                 });
@@ -980,11 +1013,11 @@
                 .join('')
                 .toUpperCase()
                 .slice(0, 2);
-            userAvatar.textContent = initials;
+            userAvatar.textContent = initials || 'U';
 
             // Informations
-            userName.textContent = user.full_name;
-            userEmail.textContent = user.email;
+            userName.textContent = user.full_name || 'Utilisateur';
+            userEmail.textContent = user.email || '';
 
             // Statut
             if (user.account_status === 'active') {
@@ -1007,7 +1040,19 @@
             fullName.value = user.full_name || '';
             email.value = user.email || '';
             profileType.value = user.profile_type || 'etudiant';
-            country.value = user.country || '';
+
+            // ✅ Remplir le pays avec la valeur de l'utilisateur
+            const userCountry = user.country || 'FR';
+            console.log('🌍 Pays de l\'utilisateur:', userCountry);
+
+            // Sélectionner la bonne option dans la liste
+            const options = countrySelect.options;
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].value === userCountry) {
+                    countrySelect.selectedIndex = i;
+                    break;
+                }
+            }
         }
 
         // ============================================================
@@ -1025,11 +1070,9 @@
             item.addEventListener('click', function (e) {
                 e.preventDefault();
 
-                // Update active menu
                 document.querySelectorAll('.menu-item[data-tab]').forEach(m => m.classList.remove('active'));
                 this.classList.add('active');
 
-                // Show tab
                 const tab = this.dataset.tab;
                 document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
                 document.getElementById(`tab-${tab}`).style.display = 'block';
@@ -1037,9 +1080,9 @@
         });
 
         // ============================================================
-        // Profile Form
+        // Profile Form - Envoyer la mise à jour au backend
         // ============================================================
-        document.getElementById('profileForm').addEventListener('submit', function (e) {
+        document.getElementById('profileForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
             if (!isAuthenticated()) {
@@ -1050,12 +1093,32 @@
             const data = {
                 full_name: fullName.value,
                 profile_type: profileType.value,
-                country: country.value
+                country: countrySelect.value  // ✅ Envoyer le code pays sélectionné
             };
 
-            // Simuler l'enregistrement
-            showToast('Profil mis à jour avec succès !', 'success');
-            console.log('📝 Données mises à jour:', data);
+            try {
+                const token = getToken();
+                const response = await fetch(`${API_BASE_URL}/auth/me`, {
+                    method: 'PUT',  // ou PATCH selon votre backend
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    showToast('✅ Profil mis à jour avec succès !', 'success');
+                    // Recharger les données
+                    await fetchUser();
+                } else {
+                    const error = await response.json();
+                    showToast(error.error || 'Erreur lors de la mise à jour', 'error');
+                }
+            } catch (error) {
+                console.error('❌ Erreur:', error);
+                showToast('Erreur lors de la mise à jour du profil', 'error');
+            }
         });
 
         // ============================================================
@@ -1082,7 +1145,7 @@
                 return;
             }
 
-            showToast('Mot de passe modifié avec succès !', 'success');
+            showToast('✅ Mot de passe modifié avec succès !', 'success');
             this.reset();
         });
 
@@ -1094,7 +1157,7 @@
                 showLoginRequired();
                 return;
             }
-            showToast('Préférences enregistrées !', 'success');
+            showToast('✅ Préférences enregistrées !', 'success');
         });
 
         // ============================================================

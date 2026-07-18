@@ -737,21 +737,21 @@
                 <div class="subscription-card">
 
                     <!-- Statut -->
-                    <div class="subscription-status active" id="statusBadge">
-                        <span class="status-icon">✅</span>
-                        <span class="status-text">Abonnement actif</span>
+                    <div class="subscription-status" id="statusBadge">
+                        <span class="status-icon">⏳</span>
+                        <span class="status-text">Chargement...</span>
                     </div>
 
                     <!-- Informations -->
                     <div class="subscription-info">
                         <div class="info-item">
                             <span class="label">📅 Date d'activation</span>
-                            <span class="value" id="startDate">15 juillet 2026</span>
+                            <span class="value" id="startDate">-</span>
                             <span class="sub-value">Abonnement débuté</span>
                         </div>
                         <div class="info-item">
                             <span class="label">🔄 Prochain paiement</span>
-                            <span class="value" id="nextPayment">15 août 2026</span>
+                            <span class="value" id="nextPayment">-</span>
                             <span class="sub-value">Renouvellement mensuel</span>
                         </div>
                     </div>
@@ -768,7 +768,7 @@
                         <button class="btn-success" id="renewBtn">
                             <i class="fas fa-sync-alt"></i> Renouveler
                         </button>
-                        <button class="btn-outline" id="cancelBtn">
+                        <button class="btn-outline" id="cancelBtn" style="display: none;">
                             <i class="fas fa-times"></i> Résilier
                         </button>
                         <button class="btn-primary" id="paymentHistoryBtn">
@@ -920,6 +920,13 @@
             }
 
             try {
+                // Afficher le chargement
+                statusBadge.className = 'subscription-status';
+                statusBadge.innerHTML = `
+                    <span class="status-icon">⏳</span>
+                    <span class="status-text">Chargement...</span>
+                `;
+
                 const response = await fetch(`${API_BASE_URL}/subscription`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -939,19 +946,23 @@
                 }
 
                 const data = await response.json();
-                console.log('📊 Données abonnement:', data);
+                console.log('📊 Données abonnement reçues:', data);
                 updateSubscriptionUI(data);
 
             } catch (error) {
                 console.error('❌ Erreur:', error);
                 showToast('Erreur de chargement des données', 'error');
-                // En cas d'erreur, afficher des données simulées
-                showDemoData();
+                // En cas d'erreur, afficher un message
+                statusBadge.className = 'subscription-status inactive';
+                statusBadge.innerHTML = `
+                    <span class="status-icon">❌</span>
+                    <span class="status-text">Erreur de chargement</span>
+                `;
             }
         }
 
         // ============================================================
-        // Update UI
+        // Update UI avec les vraies données
         // ============================================================
         function updateSubscriptionUI(data) {
             subscriptionContent.style.display = 'block';
@@ -961,7 +972,12 @@
 
             // Date d'activation
             if (data.started_at) {
-                startDateEl.textContent = formatDate(data.started_at);
+                const date = new Date(data.started_at);
+                startDateEl.textContent = date.toLocaleDateString('fr-FR', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
                 startDateEl.className = 'value active';
             } else {
                 startDateEl.textContent = 'Non disponible';
@@ -970,7 +986,12 @@
 
             // Prochain paiement
             if (data.current_period_end) {
-                nextPaymentEl.textContent = formatDate(data.current_period_end);
+                const date = new Date(data.current_period_end);
+                nextPaymentEl.textContent = date.toLocaleDateString('fr-FR', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
                 nextPaymentEl.className = 'value active';
             } else {
                 nextPaymentEl.textContent = 'Non disponible';
@@ -1008,20 +1029,6 @@
         }
 
         // ============================================================
-        // Demo Data (pour développement)
-        // ============================================================
-        function showDemoData() {
-            const demoData = {
-                is_active: false,
-                started_at: null,
-                current_period_end: null,
-                provider: 'genius_pay'
-            };
-            updateSubscriptionUI(demoData);
-            console.log('📊 Données de démonstration utilisées');
-        }
-
-        // ============================================================
         // Actions
         // ============================================================
         document.getElementById('renewBtn').addEventListener('click', function () {
@@ -1049,7 +1056,6 @@
                 return;
             }
             showToast('📜 Historique des paiements', 'success');
-            // Vous pouvez ouvrir une modale ou rediriger vers une page d'historique
         });
 
         // ============================================================
@@ -1079,17 +1085,19 @@
         });
 
         // ============================================================
-        // Init
+        // Init - Vérifier si l'utilisateur est connecté
         // ============================================================
-        // Vérifier si l'utilisateur est connecté
         if (isAuthenticated()) {
+            // Vérifier le token et récupérer les données
             fetchSubscription();
         } else {
             showLoginRequired();
+            console.log('🔐 Non authentifié');
         }
 
         console.log('👑 Admi.To - Page Abonnement');
         console.log('🔐 Authentifié:', isAuthenticated());
+        console.log('📊 API URL:', API_BASE_URL);
     </script>
 
 </body>
