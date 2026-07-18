@@ -527,6 +527,49 @@
         }
 
         /* ============================================================
+           TOAST
+           ============================================================ */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 14px 24px;
+            border-radius: var(--radius-sm);
+            background: var(--text);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow-hover);
+            transform: translateY(120px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 9999;
+            max-width: 420px;
+        }
+
+        .toast.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success .toast-icon {
+            color: var(--success);
+        }
+
+        .toast.error .toast-icon {
+            color: var(--danger);
+        }
+
+        .toast .toast-icon {
+            font-size: 20px;
+        }
+
+        .toast .toast-message {
+            font-size: 14px;
+        }
+
+        /* ============================================================
            FOOTER
            ============================================================ */
         .footer {
@@ -799,6 +842,12 @@
         </div>
     </footer>
 
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast">
+        <span class="toast-icon"></span>
+        <span class="toast-message"></span>
+    </div>
+
     <!-- ===== JAVASCRIPT ===== -->
     <script>
         // ============================================================
@@ -814,6 +863,27 @@
         const startDateEl = document.getElementById('startDate');
         const nextPaymentEl = document.getElementById('nextPayment');
         const statusBadge = document.getElementById('statusBadge');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.querySelector('.toast-message');
+        const toastIcon = document.querySelector('.toast-icon');
+
+        // ============================================================
+        // Toast
+        // ============================================================
+        let toastTimeout;
+
+        function showToast(message, type = 'success') {
+            clearTimeout(toastTimeout);
+            toast.classList.remove('active', 'success', 'error');
+
+            toastIcon.textContent = type === 'success' ? '✅' : '❌';
+            toastMessage.textContent = message;
+            toast.classList.add(type, 'active');
+
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('active');
+            }, 4000);
+        }
 
         // ============================================================
         // Token Management
@@ -858,9 +928,9 @@
                 });
 
                 if (response.status === 401) {
-                    // Token invalide ou expiré
                     localStorage.removeItem('admito_token');
                     showLoginRequired();
+                    showToast('Session expirée, veuillez vous reconnecter', 'error');
                     return;
                 }
 
@@ -874,7 +944,8 @@
 
             } catch (error) {
                 console.error('❌ Erreur:', error);
-                // En cas d'erreur, afficher des données simulées pour le développement
+                showToast('Erreur de chargement des données', 'error');
+                // En cas d'erreur, afficher des données simulées
                 showDemoData();
             }
         }
@@ -915,6 +986,7 @@
                 `;
                 document.getElementById('renewBtn').disabled = false;
                 document.getElementById('cancelBtn').style.display = 'inline-flex';
+                showToast('✅ Abonnement actif', 'success');
             } else {
                 statusBadge.className = 'subscription-status inactive';
                 statusBadge.innerHTML = `
@@ -923,6 +995,7 @@
                 `;
                 document.getElementById('renewBtn').disabled = true;
                 document.getElementById('cancelBtn').style.display = 'none';
+                showToast('❌ Abonnement inactif', 'error');
             }
         }
 
@@ -939,9 +1012,9 @@
         // ============================================================
         function showDemoData() {
             const demoData = {
-                is_active: true,
-                started_at: '2026-07-15',
-                current_period_end: '2026-08-15',
+                is_active: false,
+                started_at: null,
+                current_period_end: null,
                 provider: 'genius_pay'
             };
             updateSubscriptionUI(demoData);
@@ -956,9 +1029,7 @@
                 showLoginRequired();
                 return;
             }
-            alert('✅ Votre abonnement a été renouvelé avec succès !\n\n' +
-                '📅 Prochain paiement : ' + nextPaymentEl.textContent +
-                '\n💰 3 € prélevés automatiquement.');
+            showToast('✅ Abonnement renouvelé avec succès !', 'success');
         });
 
         document.getElementById('cancelBtn').addEventListener('click', function () {
@@ -968,9 +1039,7 @@
             }
             if (confirm('⚠️ Êtes-vous sûr de vouloir résilier votre abonnement ?\n' +
                 'Vous perdrez l\'accès aux offres premium.')) {
-                alert('❌ Votre abonnement a été résilié.\n' +
-                    'Vous aurez accès jusqu\'au ' + nextPaymentEl.textContent);
-                // Ici, vous appelleriez l'API pour résilier
+                showToast('❌ Abonnement résilié', 'error');
             }
         });
 
@@ -979,11 +1048,8 @@
                 showLoginRequired();
                 return;
             }
-            alert('📜 HISTORIQUE DES PAIEMENTS\n\n' +
-                '15/07/2026 - 3,00 € - Renouvellement\n' +
-                '15/06/2026 - 3,00 € - Renouvellement\n' +
-                '15/05/2026 - 3,00 € - Premier paiement\n\n' +
-                '💰 Total payé : 9,00 €');
+            showToast('📜 Historique des paiements', 'success');
+            // Vous pouvez ouvrir une modale ou rediriger vers une page d'historique
         });
 
         // ============================================================
@@ -991,14 +1057,12 @@
         // ============================================================
         document.getElementById('playStoreLink').addEventListener('click', function (e) {
             e.preventDefault();
-            alert('📱 L\'application sera disponible sur le Play Store très prochainement !\n' +
-                '🔔 Vous serez notifié dès sa sortie.');
+            showToast('📱 Play Store - Bientôt disponible !', 'success');
         });
 
         document.getElementById('appStoreLink').addEventListener('click', function (e) {
             e.preventDefault();
-            alert('📱 L\'application sera disponible sur l\'App Store très prochainement !\n' +
-                '🔔 Vous serez notifié dès sa sortie.');
+            showToast('📱 App Store - Bientôt disponible !', 'success');
         });
 
         // ============================================================

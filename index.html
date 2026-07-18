@@ -40,11 +40,6 @@
                         <a href="#" class="btn btn-outline" id="loginBtn">Connexion</a>
                         <a href="#" class="btn btn-primary" id="registerBtn">S'inscrire</a>
                     </div>
-                    <p class="form-footer">
-                        <a href="forgot-password.html" style="color: var(--brown-dark); font-weight: 500;">
-                            Mot de passe oublié ?
-                        </a>
-                    </p>
                     <div class="user-menu" id="userMenu" style="display: none;">
                         <button class="user-avatar" id="userAvatar">
                             <span id="userInitials">U</span>
@@ -315,7 +310,7 @@
         </div>
     </div>
 
-    <!-- Register Modal -->
+    <!-- Register Modal AVEC PAYS -->
     <div class="modal" id="registerModal">
         <div class="modal-content modal-auth">
             <div class="modal-auth-header">
@@ -337,6 +332,40 @@
                     <label><i class="fas fa-lock"></i> Mot de passe</label>
                     <input type="password" id="registerPassword" placeholder="Min 6 caractères" required />
                 </div>
+
+                <!-- ✅ AJOUT DU CHAMP PAYS -->
+                <div class="form-group">
+                    <label><i class="fas fa-globe-africa"></i> Pays</label>
+                    <select id="registerCountry" class="form-control" required>
+                        <option value="FR">🇫🇷 France</option>
+                        <option value="CI">🇨🇮 Côte d'Ivoire</option>
+                        <option value="SN">🇸🇳 Sénégal</option>
+                        <option value="CM">🇨🇲 Cameroun</option>
+                        <option value="BJ">🇧🇯 Bénin</option>
+                        <option value="TG">🇹🇬 Togo</option>
+                        <option value="ML">🇲🇱 Mali</option>
+                        <option value="BF">🇧🇫 Burkina Faso</option>
+                        <option value="NE">🇳🇪 Niger</option>
+                        <option value="NG">🇳🇬 Nigeria</option>
+                        <option value="GH">🇬🇭 Ghana</option>
+                        <option value="MA">🇲🇦 Maroc</option>
+                        <option value="TN">🇹🇳 Tunisie</option>
+                        <option value="DZ">🇩🇿 Algérie</option>
+                        <option value="CA">🇨🇦 Canada</option>
+                        <option value="US">🇺🇸 États-Unis</option>
+                        <option value="BE">🇧🇪 Belgique</option>
+                        <option value="CH">🇨🇭 Suisse</option>
+                        <option value="GB">🇬🇧 Royaume-Uni</option>
+                        <option value="DE">🇩🇪 Allemagne</option>
+                        <option value="ES">🇪🇸 Espagne</option>
+                        <option value="IT">🇮🇹 Italie</option>
+                        <option value="PT">🇵🇹 Portugal</option>
+                        <option value="NL">🇳🇱 Pays-Bas</option>
+                        <option value="ZA">🇿🇦 Afrique du Sud</option>
+                        <option value="KE">🇰🇪 Kenya</option>
+                    </select>
+                </div>
+
                 <button type="submit" class="btn btn-primary btn-full btn-auth">
                     <i class="fas fa-user-plus"></i> S'inscrire
                 </button>

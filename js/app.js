@@ -235,15 +235,23 @@ if (elements.loginForm) {
     });
 }
 
+// js/app.js - Modifier la fonction register
+
 if (elements.registerForm) {
     elements.registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const full_name = elements.registerName.value;
         const email = elements.registerEmail.value;
         const password = elements.registerPassword.value;
+        const country = document.getElementById('registerCountry').value; // ✅ Récupérer le pays
 
         try {
-            const data = await AuthAPI.register({ full_name, email, password });
+            const data = await AuthAPI.register({
+                full_name,
+                email,
+                password,
+                country  // ✅ Envoyer le pays
+            });
             setAuthToken(data.token);
             state.currentUser = data.user;
             updateUIForAuth(true);
@@ -257,7 +265,6 @@ if (elements.registerForm) {
         }
     });
 }
-
 if (elements.logoutBtn) {
     elements.logoutBtn.addEventListener('click', () => {
         setAuthToken(null);

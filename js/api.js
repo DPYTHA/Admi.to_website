@@ -70,10 +70,20 @@ async function request(endpoint, options = {}) {
 
 // Auth API
 const AuthAPI = {
-    register: (data) => request('/auth/register', {
-        method: 'POST',
-        body: JSON.stringify(data),
-    }),
+    register: (data) => {
+        // ✅ S'assurer que le pays est envoyé
+        const payload = {
+            full_name: data.full_name,
+            email: data.email,
+            password: data.password,
+            profile_type: data.profile_type || 'etudiant',
+            country: data.country || 'FR'  // ✅ Ajouter le pays avec valeur par défaut
+        };
+        return request('/auth/register', {
+            method: 'POST',
+            body: JSON.stringify(payload),
+        });
+    },
     login: (data) => request('/auth/login', {
         method: 'POST',
         body: JSON.stringify(data),
