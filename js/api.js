@@ -68,16 +68,17 @@ async function request(endpoint, options = {}) {
     }
 }
 
-// Auth API
+// Auth API - AVEC TÉLÉPHONE
 const AuthAPI = {
     register: (data) => {
-        // ✅ S'assurer que le pays est envoyé
+        // ✅ S'assurer que le pays et le téléphone sont envoyés
         const payload = {
             full_name: data.full_name,
             email: data.email,
             password: data.password,
+            phone: data.phone || '',  // ✅ AJOUTER LE TÉLÉPHONE
             profile_type: data.profile_type || 'etudiant',
-            country: data.country || 'FR'  // ✅ Ajouter le pays avec valeur par défaut
+            country: data.country || 'CI'  // ✅ CI par défaut
         };
         return request('/auth/register', {
             method: 'POST',

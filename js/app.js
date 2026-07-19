@@ -14,7 +14,7 @@ const state = {
     isLoading: false,
     isInitialized: false,
     loadAttempts: 0,
-    isStopped: false, // ⛔ Arrêt d'urgence
+    isStopped: false,
 };
 
 // ============================================================
@@ -46,6 +46,8 @@ const elements = {
     registerName: $('#registerName'),
     registerEmail: $('#registerEmail'),
     registerPassword: $('#registerPassword'),
+    registerPhone: $('#registerPhone'), // ✅ AJOUTER
+    registerCountry: $('#registerCountry'), // ✅ AJOUTER
     totalOffers: $('#totalOffers'),
     totalUsers: $('#totalUsers'),
     categoriesGrid: $('#categoriesGrid'),
@@ -84,7 +86,6 @@ function showToast(message, type = 'success') {
     }, 4000);
 }
 
-// Exposer pour components.js
 window.showToast = showToast;
 window.WalletAPI = WalletAPI;
 window.loadWallet = loadWallet;
@@ -102,13 +103,11 @@ async function checkAuth() {
             const user = await AuthAPI.me();
             state.currentUser = user;
 
-            // ✅ FORCER LE PREMIUM POUR ADMIN
             if (user && user.email === 'admin@admi.to') {
                 user.is_premium = true;
                 console.log('👑 Admin forcé en premium');
             }
 
-            // ✅ SI LE BACKEND NE RENVOIE PAS is_premium, LE FORCER
             if (user && user.is_premium === undefined) {
                 user.is_premium = true;
                 console.log('⚠️ is_premium non défini, forcé à true');
@@ -129,7 +128,6 @@ async function checkAuth() {
     checkPremiumStatus();
     return false;
 }
-
 
 function updateUIForAuth(isAuthenticated) {
     if (isAuthenticated && state.currentUser) {
@@ -169,7 +167,6 @@ function closeModal(modalId) {
     }
 }
 
-// Close modal on backdrop click
 document.querySelectorAll('.modal').forEach(modal => {
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
@@ -178,7 +175,6 @@ document.querySelectorAll('.modal').forEach(modal => {
     });
 });
 
-// Close modal with close button
 document.querySelectorAll('.modal-close').forEach(btn => {
     btn.addEventListener('click', () => {
         closeModal(btn.dataset.modal);
@@ -213,6 +209,7 @@ if (switchToLogin) {
     });
 }
 
+// ===== LOGIN =====
 if (elements.loginForm) {
     elements.loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -235,22 +232,23 @@ if (elements.loginForm) {
     });
 }
 
-// js/app.js - Modifier la fonction register
-
+// ===== REGISTER - AVEC TÉLÉPHONE =====
 if (elements.registerForm) {
     elements.registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const full_name = elements.registerName.value;
         const email = elements.registerEmail.value;
         const password = elements.registerPassword.value;
-        const country = document.getElementById('registerCountry').value; // ✅ Récupérer le pays
+        const phone = elements.registerPhone.value; // ✅ RÉCUPÉRER LE TÉLÉPHONE
+        const country = elements.registerCountry.value;
 
         try {
             const data = await AuthAPI.register({
                 full_name,
                 email,
                 password,
-                country  // ✅ Envoyer le pays
+                phone,  // ✅ ENVOYER LE TÉLÉPHONE
+                country
             });
             setAuthToken(data.token);
             state.currentUser = data.user;
@@ -265,6 +263,7 @@ if (elements.registerForm) {
         }
     });
 }
+
 if (elements.logoutBtn) {
     elements.logoutBtn.addEventListener('click', () => {
         setAuthToken(null);
@@ -286,7 +285,6 @@ if (elements.userAvatar) {
     });
 }
 
-// Close dropdown on outside click
 document.addEventListener('click', (e) => {
     if (elements.userDropdown && elements.userAvatar &&
         !elements.userAvatar.contains(e.target) &&
@@ -295,7 +293,6 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Dropdown navigation
 const profileBtn = document.getElementById('profileBtn');
 if (profileBtn) {
     profileBtn.addEventListener('click', (e) => {
@@ -333,14 +330,12 @@ if (elements.menuToggle) {
     });
 }
 
-// Close mobile menu on link click
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
         if (elements.navLinks) elements.navLinks.classList.remove('active');
     });
 });
 
-// Wallet nav link
 const walletNavLink = document.getElementById('walletNavLink');
 if (walletNavLink) {
     walletNavLink.addEventListener('click', (e) => {
@@ -360,8 +355,6 @@ if (walletFooterLink) {
 // ============================================================
 // Hero Stats
 // ============================================================
-// js/app.js - Remplacer loadStats()
-
 async function loadStats() {
     if (state.isStopped) return;
 
@@ -370,7 +363,6 @@ async function loadStats() {
         console.log('📊 Statistiques reçues:', stats);
 
         if (elements.totalOffers) {
-
             const offersCount = stats.total_offers || stats.offers || 0;
             elements.totalOffers.textContent = offersCount > 0 ? offersCount : '0';
         }
@@ -380,8 +372,6 @@ async function loadStats() {
         }
     } catch (error) {
         console.error('❌ Error loading stats:', error);
-        // ✅ Garder les valeurs existantes en cas d'erreur
-
     }
 }
 
@@ -411,7 +401,6 @@ let isOffersLoading = false;
 let abortController = null;
 
 function stopAllLoading() {
-    // ⛔ ARRÊT D'URGENCE
     state.isStopped = true;
     state.isLoading = false;
     isOffersLoading = false;
@@ -430,19 +419,16 @@ function stopAllLoading() {
 }
 
 async function loadOffers() {
-    // Si le chargement est arrêté, ne rien faire
     if (state.isStopped) {
         console.log('⛔ Chargement arrêté, ignore');
         return;
     }
 
-    // Éviter les chargements multiples
     if (isOffersLoading || state.isLoading) {
         console.log('⏳ Chargement déjà en cours...');
         return;
     }
 
-    // Limiter les tentatives
     if (state.loadAttempts > 5) {
         console.log('❌ Trop de tentatives, arrêt');
         if (elements.offersGrid) {
@@ -467,7 +453,6 @@ async function loadOffers() {
     console.log(`🔄 Chargement des offres (tentative ${state.loadAttempts})...`);
 
     try {
-        // Afficher le spinner
         if (elements.offersGrid) {
             elements.offersGrid.innerHTML = `
                 <div class="loading-spinner">
@@ -477,7 +462,6 @@ async function loadOffers() {
             `;
         }
 
-        // Créer un AbortController pour annuler la requête
         abortController = new AbortController();
         const signal = abortController.signal;
 
@@ -489,7 +473,7 @@ async function loadOffers() {
         }
 
         state.offers = data || [];
-        state.loadAttempts = 0; // Réinitialiser les tentatives
+        state.loadAttempts = 0;
         applyFilters();
         console.log(`✅ ${state.offers.length} offres chargées`);
 
@@ -502,7 +486,6 @@ async function loadOffers() {
         console.error('❌ Error loading offers:', error);
 
         if (state.loadAttempts < 5) {
-            // Attendre avant de réessayer
             if (elements.offersGrid) {
                 elements.offersGrid.innerHTML = `
                     <div class="loading-spinner">
@@ -521,7 +504,6 @@ async function loadOffers() {
             return;
         }
 
-        // Afficher l'erreur après toutes les tentatives
         if (elements.offersGrid) {
             elements.offersGrid.innerHTML = `
                 <div style="grid-column:1/-1; text-align:center; padding:40px;">
@@ -549,7 +531,6 @@ async function loadOffers() {
     }
 }
 
-// Fonction pour réinitialiser et recharger
 function resetAndReload() {
     console.log('🔄 Réinitialisation...');
     state.isStopped = false;
@@ -567,13 +548,11 @@ function resetAndReload() {
         abortController = null;
     }
 
-    // Attendre un peu avant de recharger
     setTimeout(() => {
         loadOffers();
     }, 500);
 }
 
-// Exposer la fonction de réinitialisation
 window.resetAndReload = resetAndReload;
 
 function applyFilters() {
@@ -616,14 +595,12 @@ function renderOffers(offers) {
         return;
     }
 
-    // Mettre à jour les walletIds
     const walletIds = state.wallet.map(w => w.offer ? w.offer.id : null).filter(id => id !== null);
     setWalletIds(walletIds);
 
     elements.offersGrid.innerHTML = offers.map(offer => renderOfferCard(offer)).join('');
     if (elements.offersActions) elements.offersActions.style.display = 'flex';
 
-    // Event listeners for offer cards
     document.querySelectorAll('.offer-card').forEach(card => {
         card.addEventListener('click', (e) => {
             if (e.target.closest('.btn-icon')) return;
@@ -738,7 +715,6 @@ async function toggleSaveOffer(offerId) {
             showToast('Offre ajoutée au portefeuille !', 'success');
         }
 
-        // Mettre à jour les icônes
         document.querySelectorAll(`.offer-card[data-id="${offerId}"] .btn-icon i`).forEach(icon => {
             const isNowSaved = state.wallet.some(w => w.offer && w.offer.id === offerId);
             icon.className = isNowSaved ? 'fas fa-bookmark' : 'far fa-bookmark';
@@ -749,7 +725,6 @@ async function toggleSaveOffer(offerId) {
     }
 }
 
-// Exposer pour les boutons onclick
 window.toggleSaveOffer = toggleSaveOffer;
 
 // ============================================================
@@ -842,6 +817,55 @@ if (newsletterForm) {
 }
 
 // ============================================================
+// Premium Management
+// ============================================================
+let isPremium = false;
+
+function checkPremiumStatus() {
+    if (state.currentUser && state.currentUser.is_premium) {
+        isPremium = true;
+        showPremiumContent();
+    } else {
+        isPremium = false;
+        showLockedContent();
+    }
+}
+
+function showPremiumContent() {
+    const lock = document.getElementById('premiumLock');
+    const content = document.getElementById('offersContent');
+
+    if (lock) lock.style.display = 'none';
+    if (content) {
+        content.style.display = 'block';
+        content.classList.add('active');
+    }
+    const tag = document.querySelector('.premium-tag');
+    if (tag) {
+        tag.textContent = '🌟 Premium';
+        tag.style.background = '#4A7C59';
+        tag.style.color = 'white';
+    }
+}
+
+function showLockedContent() {
+    const lock = document.getElementById('premiumLock');
+    const content = document.getElementById('offersContent');
+
+    if (lock) lock.style.display = 'flex';
+    if (content) {
+        content.style.display = 'none';
+        content.classList.remove('active');
+    }
+    const tag = document.querySelector('.premium-tag');
+    if (tag) {
+        tag.textContent = '🔒 Premium';
+        tag.style.background = '#f0c040';
+        tag.style.color = '#7a5a00';
+    }
+}
+
+// ============================================================
 // Init
 // ============================================================
 let isInitializing = false;
@@ -853,7 +877,22 @@ async function init() {
     try {
         await checkAuth();
         await loadStats();
-        await loadOffers();
+
+        checkPremiumStatus();
+
+        if (isPremium) {
+            await loadOffers();
+        } else {
+            if (elements.offersGrid) {
+                elements.offersGrid.innerHTML = `
+                    <div style="grid-column:1/-1; text-align:center; padding:40px;">
+                        <p style="font-size:48px; margin-bottom:16px;">🔒</p>
+                        <p style="color: var(--text-light); font-size:18px;">Abonne-toi pour voir les offres</p>
+                    </div>
+                `;
+            }
+        }
+
         await loadWallet();
         state.isInitialized = true;
         console.log('✅ Application initialisée avec succès');
@@ -876,242 +915,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// js/app.js - Ajouter la gestion premium
-
-// ============================================================
-// Premium Management
-// ============================================================
-let isPremium = false;
-
-function checkPremiumStatus() {
-    // Vérifier si l'utilisateur a un abonnement actif
-    if (state.currentUser && state.currentUser.is_premium) {
-        isPremium = true;
-        showPremiumContent();
-    } else {
-        isPremium = false;
-        showLockedContent();
-    }
-}
-
-function showPremiumContent() {
-    const lock = document.getElementById('premiumLock');
-    const content = document.getElementById('offersContent');
-
-    if (lock) lock.style.display = 'none';
-    if (content) {
-        content.style.display = 'block';
-        content.classList.add('active');
-    }
-    // Mettre à jour le tag
-    const tag = document.querySelector('.premium-tag');
-    if (tag) {
-        tag.textContent = '🌟 Premium';
-        tag.style.background = '#4A7C59';
-        tag.style.color = 'white';
-    }
-}
-
-function showLockedContent() {
-    const lock = document.getElementById('premiumLock');
-    const content = document.getElementById('offersContent');
-
-    if (lock) lock.style.display = 'flex';
-    if (content) {
-        content.style.display = 'none';
-        content.classList.remove('active');
-    }
-    // Mettre à jour le tag
-    const tag = document.querySelector('.premium-tag');
-    if (tag) {
-        tag.textContent = '🔒 Premium';
-        tag.style.background = '#f0c040';
-        tag.style.color = '#7a5a00';
-    }
-}
-
-// ============================================================
-// Mise à jour de l'init
-// ============================================================
-async function init() {
-    if (isInitializing) return;
-    isInitializing = true;
-
-    try {
-        await checkAuth();
-        await loadStats();
-
-        // Vérifier le statut premium
-        checkPremiumStatus();
-
-        // Si premium, charger les offres
-        if (isPremium) {
-            await loadOffers();
-        } else {
-            // Afficher un message dans la grille
-            if (elements.offersGrid) {
-                elements.offersGrid.innerHTML = `
-                    <div style="grid-column:1/-1; text-align:center; padding:40px;">
-                        <p style="font-size:48px; margin-bottom:16px;">🔒</p>
-                        <p style="color: var(--text-light); font-size:18px;">Abonne-toi pour voir les offres</p>
-                    </div>
-                `;
-            }
-        }
-
-        await loadWallet();
-        state.isInitialized = true;
-        console.log('✅ Application initialisée avec succès');
-    } catch (error) {
-        console.error('❌ Erreur lors de l\'initialisation:', error);
-    } finally {
-        isInitializing = false;
-    }
-}
-
-// ============================================================
-// Mise à jour après paiement
-// ============================================================
-async function refreshAfterPayment() {
-    // Recharger l'utilisateur
-    if (state.currentUser) {
-        try {
-            const user = await AuthAPI.me();
-            state.currentUser = user;
-            state.currentUser.is_premium = user.is_premium || false;
-            checkPremiumStatus();
-
-            if (isPremium) {
-                await loadOffers();
-                showToast('🎉 Abonnement activé ! Découvre toutes les offres', 'success');
-            }
-        } catch (error) {
-            console.error('Erreur refresh après paiement:', error);
-        }
-    }
-}
-
-// ============================================================
-// Mise à jour du bouton d'abonnement
-// ============================================================
-if (elements.subscribeBtn) {
-    elements.subscribeBtn.addEventListener('click', async () => {
-        if (state.isStopped) return;
-
-        if (!state.currentUser) {
-            showToast('Connectez-vous pour vous abonner', 'error');
-            openModal('loginModal');
-            return;
-        }
-
-        try {
-            const sub = await SubscriptionAPI.get();
-            if (sub.is_active) {
-                showToast('Vous êtes déjà abonné !', 'success');
-                return;
-            }
-
-            const payment = await SubscriptionAPI.payWithGeniusPay();
-            if (payment.checkout_url) {
-                window.open(payment.checkout_url, '_blank');
-                showToast('Redirection vers la page de paiement...', 'success');
-
-                let attempts = 0;
-                const maxAttempts = 10;
-                const interval = setInterval(async () => {
-                    attempts++;
-                    try {
-                        const confirm = await SubscriptionAPI.confirmGeniusPay();
-                        if (confirm.subscription && confirm.subscription.is_active) {
-                            clearInterval(interval);
-                            state.subscription = confirm.subscription;
-                            // Mettre à jour le statut premium
-                            state.currentUser.is_premium = true;
-                            checkPremiumStatus();
-                            await loadOffers();
-                            showToast('🎉 Abonnement activé avec succès !', 'success');
-                        }
-                    } catch (e) {
-                        if (attempts >= maxAttempts) {
-                            clearInterval(interval);
-                            showToast('Le paiement semble prendre du temps... Vérifiez plus tard', 'error');
-                        }
-                    }
-                }, 3000);
-            }
-        } catch (error) {
-            showToast(error.data?.error || 'Erreur lors du paiement', 'error');
-        }
-    });
-}
-
-// ============================================================
-// Exposer refreshAfterPayment pour les boutons
-// ============================================================
-window.refreshAfterPayment = refreshAfterPayment;
-
-// ============================================================
-// Mise à jour de checkAuth
-// ============================================================
-async function checkAuth() {
-    if (state.isStopped) return false;
-
-    const token = getAuthToken();
-    if (token) {
-        try {
-            const user = await AuthAPI.me();
-            state.currentUser = user;
-            state.currentUser.is_premium = user.is_premium || false;
-            updateUIForAuth(true);
-            checkPremiumStatus();
-            return true;
-        } catch (error) {
-            setAuthToken(null);
-            updateUIForAuth(false);
-            checkPremiumStatus();
-            return false;
-        }
-    }
-    updateUIForAuth(false);
-    checkPremiumStatus();
-    return false;
-}
-
-// ============================================================
-// Mise à jour des modals - Gestion des boutons
-// ============================================================
-if (elements.loginBtn) {
-    elements.loginBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        openModal('loginModal');
-    });
-}
-if (elements.registerBtn) {
-    elements.registerBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        openModal('registerModal');
-    });
-}
-
-// Hero explore button
-document.getElementById('heroExploreBtn')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    const target = document.getElementById('offres');
-    if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-    }
-});
-
-// Offres nav link
-document.getElementById('offresNavLink')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    const target = document.getElementById('offres');
-    if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-    }
-});
-
-// ⛔ ARRÊT D'URGENCE : stopper tout si le DOM est chargé mais que les offres ne viennent pas
+// ⛔ ARRÊT D'URGENCE
 let emergencyTimeout = setTimeout(() => {
     if (state.isLoading && !state.isInitialized) {
         console.log('⛔ ARRÊT D\'URGENCE - Le chargement prend trop de temps');
@@ -1131,22 +935,19 @@ let emergencyTimeout = setTimeout(() => {
             `;
         }
     }
-}, 15000); // 15 secondes max
+}, 15000);
 
-// Démarrer l'application quand le DOM est chargé
+// Démarrer l'application
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        // Annuler le timeout d'urgence une fois que le DOM est chargé
         clearTimeout(emergencyTimeout);
         init();
     });
 } else {
-    // DOM déjà chargé
     clearTimeout(emergencyTimeout);
     init();
 }
 
-// Exposer loadOffers pour le bouton de réessai
 window.loadOffers = loadOffers;
 window.stopAllLoading = stopAllLoading;
 

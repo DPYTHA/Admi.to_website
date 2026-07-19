@@ -310,7 +310,7 @@
         </div>
     </div>
 
-    <!-- Register Modal AVEC PAYS -->
+    <!-- Register Modal AVEC TÉLÉPHONE ET PAYS -->
     <div class="modal" id="registerModal">
         <div class="modal-content modal-auth">
             <div class="modal-auth-header">
@@ -333,12 +333,21 @@
                     <input type="password" id="registerPassword" placeholder="Min 6 caractères" required />
                 </div>
 
+                <!-- ✅ AJOUT DU CHAMP TÉLÉPHONE -->
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i> Téléphone</label>
+                    <input type="tel" id="registerPhone" placeholder="+2250710069791" required />
+                    <small style="display: block; margin-top: 4px; color: var(--text-light); font-size: 12px;">
+                        Numéro avec indicatif pays (ex: +225 pour la Côte d'Ivoire)
+                    </small>
+                </div>
+
                 <!-- ✅ AJOUT DU CHAMP PAYS -->
                 <div class="form-group">
                     <label><i class="fas fa-globe-africa"></i> Pays</label>
                     <select id="registerCountry" class="form-control" required>
-                        <option value="FR">🇫🇷 France</option>
                         <option value="CI">🇨🇮 Côte d'Ivoire</option>
+                        <option value="FR">🇫🇷 France</option>
                         <option value="SN">🇸🇳 Sénégal</option>
                         <option value="CM">🇨🇲 Cameroun</option>
                         <option value="BJ">🇧🇯 Bénin</option>
